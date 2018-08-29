@@ -1,0 +1,30 @@
+[
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "devqa"
+  },
+{
+    "ParameterKey": "ParameterPath",
+    "ParameterValue": "/devqa/rds-pgwrapper"
+  },
+  {
+    "ParameterKey": "LogBucket",
+    "ParameterValue": "log-eis-bidqa"
+  },
+  {
+    "ParameterKey": "LogTable",
+    "ParameterValue": "public.tbl_process_log_test"
+  },
+  {
+    "ParameterKey": "LogFolder",
+    "ParameterValue": "dataprocesstest"
+  },
+{
+    "ParameterKey": "SecurityGroupIds",
+    "ParameterValue": "sg-5c64b120,sg-6364b11f"
+  },
+{
+    "ParameterKey": "SubnetIds",
+    "ParameterValue": "subnet-fee4cbb7,subnet-f1e4cbb8"
+  }  
+]

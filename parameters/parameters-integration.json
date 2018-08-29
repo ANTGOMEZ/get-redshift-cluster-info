@@ -1,0 +1,30 @@
+[
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "integration"
+  },
+{
+    "ParameterKey": "ParameterPath",
+    "ParameterValue": "/integration/rds-pgwrapper"
+  },
+  {
+    "ParameterKey": "LogBucket",
+    "ParameterValue": "log-eis-integration"
+  },
+  {
+    "ParameterKey": "LogTable",
+    "ParameterValue": "public.tbl_process_log_test"
+  },
+  {
+    "ParameterKey": "LogFolder",
+    "ParameterValue": "dataprocesstest"
+  },
+{
+    "ParameterKey": "SecurityGroupIds",
+    "ParameterValue": "sg-408e443c,sg-478e443b"
+  },
+{
+    "ParameterKey": "SubnetIds",
+    "ParameterValue": "subnet-d39eb29a,subnet-d19eb298"
+  }
+]

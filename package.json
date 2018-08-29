@@ -1,0 +1,55 @@
+{
+  "name": "bi-core-backend-lambda-get-redshift-cluster-info",
+  "version": "1.0.0",
+  "description": "Lambda function that gets redshift cluster info object (json) and returns the value of the property passed in.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "e2eDevQA": "cross-env Environment=devqa mocha \"./e2e/**/*.spec.js\"",
+    "sonarscan": "./sonarRunner.js",
+    "validate": "./node_modules/aws-sam-local/node_modules/.bin/sam validate",
+    "invoke": "./node_modules/aws-sam-local/node_modules/.bin/sam local invoke",
+    "packageDevQA": "./node_modules/aws-sam-local/node_modules/.bin/sam package --template-file template.yaml --s3-bucket build-artifacts.ebiqa.ebscohost.com --s3-prefix ${npm_package_name} --output-template-file .build/package.yaml --region us-east-1 --profile devqa",
+    "deployDevQA": "./node_modules/aws-sam-local/node_modules/.bin/sam deploy --template-file .build/package.yaml --s3-bucket build-artifacts.ebiqa.ebscohost.com --stack-name ${npm_package_name} --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset --parameter-overrides $(envsubst < parameters/parameters-devqa.json | jq -r '.[] | [.ParameterKey, .ParameterValue] | join(\"=\")') --region us-east-1 --profile devqa",
+    "deleteDevQA": "aws cloudformation delete-stack --stack-name ${npm_package_name} --region us-east-1 --profile devqa",
+    "packageIntegration": "./node_modules/aws-sam-local/node_modules/.bin/sam package --template-file template.yaml --s3-bucket build-artifacts.ebiint.ebscohost.com --s3-prefix ${npm_package_name} --output-template-file .build/package.yaml --region us-east-1 --profile integration",
+    "deployIntegration": "./node_modules/aws-sam-local/node_modules/.bin/sam deploy --template-file .build/package.yaml --s3-bucket build-artifacts.ebiint.ebscohost.com --stack-name ${npm_package_name} --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset --parameter-overrides $(envsubst < parameters/parameters-integration.json | jq -r '.[] | [.ParameterKey, .ParameterValue] | join(\"=\")') --region us-east-1 --profile integration",
+    "packageProduction": "./node_modules/aws-sam-local/node_modules/.bin/sam package --template-file template.yaml --s3-bucket build-artifacts.ebi.ebscohost.com --s3-prefix ${npm_package_name} --output-template-file .build/package.yaml --region us-east-1 --profile production",
+    "deployProduction": "./node_modules/aws-sam-local/node_modules/.bin/sam deploy --template-file .build/package.yaml --s3-bucket build-artifacts.ebi.ebscohost.com --stack-name ${npm_package_name} --capabilities CAPABILITY_IAM --no-fail-on-empty-changeset --parameter-overrides $(envsubst < parameters/parameters-production.json | jq -r '.[] | [.ParameterKey, .ParameterValue] | join(\"=\")') --region us-east-1 --profile production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EBSCOIS/analyze.shared.bi-core-backend-lambda-get-redshift-cluster-info.git"
+  },
+  "author": "Tony Gomez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EBSCOIS/analyze.shared.bi-core-backend-lambda-get-redshift-cluster-info/issues"
+  },
+  "homepage": "https://github.com/EBSCOIS/analyze.shared.bi-core-backend-lambda-get-redshift-cluster-info#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "cross-env": "^5.1.5",
+    "jest": "^22.4.4",
+    "mocha": "^5.2.0",
+    "sonarqube-scanner": "^2.1.1"
+  },
+  "dependencies": {
+    "async": "^2.6.1",
+    "aws-param-store": "^2.0.0",
+    "aws-sam-local": "^0.2.11",
+    "aws-sdk": "^2.304.0",
+    "axios": "^0.18.0",
+    "json-query": "^2.2.2",
+    "jsonpath": "^1.0.0",
+    "npm": "^6.4.0",
+    "pg": "^7.4.3"
+  },
+  "jest": {
+    "rootDir": "./src",
+    "testEnvironment": "node",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/src/coverage/*"
+    ]
+  }
+}

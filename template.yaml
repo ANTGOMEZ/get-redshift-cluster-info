@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: >-
+  Lambda function that gets redshift cluster info object (json) and returns the value of the property passed in.
+Parameters:
+  Environment:
+    Type: String
+    Description: Environment
+    AllowedValues:
+      - devqa
+      - integration
+      - production
+  SecurityGroupIds:
+    Type: CommaDelimitedList
+    Description: Security Group Ids
+  SubnetIds:
+    Type: CommaDelimitedList
+    Description: Subnet Ids
+Resources:
+  getRedshiftClusterInfo:
+    DependsOn: getRedshiftClusterInfoRole
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: 'bi-core-backend-lambda-get-redshift-cluster-info'
+      Handler: src/index.handler
+      Runtime: nodejs8.10
+      CodeUri: .
+      Description: >-
+        Lambda function that gets redshift cluster info object (json) and returns the value of the property passed in.
+      MemorySize: 128
+      Timeout: 300
+      AutoPublishAlias: live
+      Tracing: Active
+      Policies:
+        - AmazonRedshiftFullAccess        
+        - AmazonEC2FullAccess
+        - CloudWatchEventsFullAccess
+        - CloudWatchLogsFullAccess
+      Environment:
+        Variables:
+          Environment: !Ref Environment
+      VpcConfig:
+        SecurityGroupIds: !Ref SecurityGroupIds
+        SubnetIds: !Ref SubnetIds
